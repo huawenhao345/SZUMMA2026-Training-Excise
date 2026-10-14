@@ -1,0 +1,6 @@
+cultivar_id,role,flower_number_multiplier,replant_cost_yuan
+A,main,1.0,0
+B,main,1.0,0
+C,pollinizer,1.2,650
+D,pollinizer,1.35,1150
+E,pollinizer,1.55,850

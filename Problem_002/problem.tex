@@ -1,0 +1,83 @@
+% Original training problem; contestant-facing statement only.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=24mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{Noto Serif CJK SC}[ItalicFont={Noto Serif CJK SC},ItalicFeatures={FakeSlant=0.15}]
+\setsansfont{Noto Sans CJK SC}
+\setmonofont{DejaVu Sans Mono}[Scale=0.86]
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip=0pt plus 1pt
+\usepackage{amsmath,amssymb,booktabs,array,enumitem,tikz,fancyhdr,hyperref,xurl}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=black,urlcolor=blue!50!black,
+pdftitle={苹果园的授粉安排},pdfauthor={SZUMMA2026 Training}}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{5pt}
+\setlist[enumerate]{leftmargin=2em,itemsep=9pt,topsep=6pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 数学建模训练题\quad Problem\_002}
+\fancyhead[R]{\small 审核稿}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\newcommand{\file}[1]{\texttt{\detokenize{#1}}}
+\begin{document}
+\begin{center}{\LARGE\bfseries 苹果园的授粉安排}\end{center}
+
+苹果的坐果与授粉密切相关。同一品种的两株树之间，花粉未必能够完成受精；不同品种之间也可能只有部分花粉相容。蜜蜂在访花时既会留下身上携带的花粉，又会带走新的花粉。因此，一朵花得到的花粉不仅取决于附近有哪些树，还与蜜蜂此前访问过的花有关。
+
+某果园有 8 行苹果树，每行 18 株，行距为 5 米，株距为 3 米。前 4 行种植品种 A，后 4 行种植品种 B。连片种植便于管理，但果园内有些地段的坐果不够均匀。合作社准备在部分树位改植授粉树，也可以在花期增租蜂群。请根据附件，为合作社研究授粉安排。
+
+附件给出了 A、B 及三种备选授粉树 C、D、E 的品种信息。它们均为二倍体，每粒花粉等概率携带供粉品种的两个 S 型之一。若花粉所带的 S 型与受粉品种的任一 S 型相同，则不能完成受精；否则称为相容花粉。各品种花粉活力按相同条件处理。授粉树的开花量、花期和改植费用见附件。
+
+花期按第 1 至第 30 日计。一朵花在开放当日及次日可以接受授粉并提供花粉，之后退出授粉过程。附件中的开花比例是每日新开放花朵所占的比例；每株的花量由原树位的参考花量和品种系数确定。另给出了逐日访花轮次，每轮包含 50 次访花。同一株树上换访另一朵花也计一次。每轮首访位置按当日开放花量的比例确定，开始时不携带可供本园利用的花粉。本题只考虑园内花粉来源。
+
+三组试验记录分别描述了等开花量样地中的花间移动、标记花粉在连续访花中的沉积，以及人工授粉剂量与初期坐果的关系。初期坐果以每朵花开放后第 30 日的结果为准，后续落果、疏果及商品果形成暂不考虑。试验分组、计量口径和字段说明见附件中的数据说明。
+
+改植方案按新植树进入正常开花年份比较，树位不变。合作社允许的安排如下：
+\begin{itemize}[leftmargin=2em,itemsep=3pt]
+\item 最多改植 12 株，每行不超过 2 株；A、B 各至少保留 64 株。每个改植树位只能选择 C、D、E 中的一种。
+\item 最多增租 3 组蜂群，每组租金 1500 元。按计划，每组可使附件所列逐日访花轮次增加 20\%，增加量按原轮次计算。
+\item 经费只用于改植和增租蜂群。授粉树不计入 A、B 的初期果数，改植造成的主栽花量减少应计入比较。
+\end{itemize}
+
+请建立数学模型，研究以下问题。
+\begin{enumerate}
+\item 利用品种信息和试验记录，建立从访花、花粉转移到初期坐果的数量关系。说明模型中哪些性质可以由附件确定，哪些需要作出假设，并利用未参与模型建立的试验记录检验模型。
+\item 按现有布局估计 A、B 的初期坐果及其空间分布，分析差异的主要原因。若访花轮次提高一倍，坐果情况会怎样变化？合作社希望以增加访花量代替改植，请评价这一做法。
+\item 在 6000 元和 10000 元两种预算下，分别给出授粉安排。列明改植树位、品种和增租蜂群数量，比较 A、B 的初期果数及各行坐果情况，并说明方案选择的依据。
+\item 花期可能错开，也可能连续几日不利于蜜蜂活动。附件给出了几种这样的情形。若安排必须在花期开始前确定，请复核第三问的方案，为 10000 元预算提出较稳妥的安排。考虑增租蜂群的实际增幅降至每组 10\% 的情况，以及试验估计的误差，说明建议的适用范围和最需要补充调查的信息。
+\end{enumerate}
+
+\newpage
+\noindent\textbf{附件说明}
+
+\begin{center}\small
+\begin{tabular}{p{.40\linewidth}p{.53\linewidth}}
+\toprule
+文件 & 内容\\
+\midrule
+\file{orchard.csv} & 树位、现有品种及参考花量\\
+\file{cultivar_genotypes.csv} & 品种 S 型及来源\\
+\file{cultivar_planning.csv}\newline\file{bloom_profiles.csv} & 品种开花量、费用及每日新开花比例\\
+\file{visitation.csv} & 基准访花轮次\\
+\file{movement_trials.csv} & 相邻两次访花的位置记录\\
+\file{carryover_trials.csv} & 连续访花的花粉沉积记录\\
+\file{fruit_set_trials.csv} & 人工授粉与初期坐果记录\\
+\file{scenarios.csv}、\file{rules.json} & 花期与访花情形、统一参数\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+以上文件位于 \file{data/}，字段与单位见 \file{data/README.md}。品种 S 型取自华盛顿州立大学公开资料；果园、经营参数及试验记录为本题设计的模拟数据，可由随附程序复现。试验中的留出标记用于模型检验，生成机制公开。情景没有给定发生概率。
+
+提交建模论文、主要程序及运行说明，并附一页面向合作社的建议书。方案应附树位配置表，说明改植后两种主栽品种的保留数量、各项费用和预算使用情况。
+
+\vspace{4pt}
+\noindent\textbf{参考资料}
+\begin{enumerate}[label={[\arabic*]},leftmargin=2em,itemsep=3pt]
+\small
+\item WSU Tree Fruit. \emph{Cross-compatibility of apple cultivars and pollinizers}. 2019，2024 年复核。\newline
+\url{https://treefruit.wsu.edu/article/cross-compatibility-of-apple-cultivars-and-pollinizers/}
+\item Hung, K.-L. J., et al. \emph{Pollen carryover, pollinator movement, and spatial context impact the delivery of pollination services in apple orchards}. Ecological Applications, 2023, 33(8): e2917.\newline
+\url{https://doi.org/10.1002/eap.2917}
+\end{enumerate}
+\end{document}

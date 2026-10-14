@@ -1,0 +1,8 @@
+scenario_id,A_shift_days,B_shift_days,C_shift_days,D_shift_days,E_shift_days,low_activity_start_day,low_activity_end_day,bout_multiplier
+reference,0,0,0,0,0,0,0,1.0
+early_A,-3,0,0,0,0,0,0,1.0
+late_B,0,3,0,0,0,0,0,1.0
+pollinizer_advance,0,0,-2,-3,-2,0,0,1.0
+quiet_early,0,0,0,0,0,8,10,0.2
+quiet_late,0,0,0,0,0,13,15,0.2
+split_and_quiet,-2,2,0,-2,0,10,12,0.25
