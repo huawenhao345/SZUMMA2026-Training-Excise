@@ -1,0 +1,11 @@
+node_id,node_type,label
+S,source,供水入口
+J,junction,分流点
+T1,tank,在线水箱1
+T2,tank,在线水箱2
+U1,user,用户末端1
+U2,user,用户末端2
+U3,user,用户末端3
+U4,user,用户末端4
+U5,user,用户末端5
+U6,user,用户末端6
