@@ -1,0 +1,4 @@
+cooling_id,added_mass_kg,Cw_J_K,Hw_W_K,Cr_J_K,Hr_W_K,added_cost_cny
+S,0,5000,1.5,900,1.2,0
+M,5,5000,3,1800,3,900
+L,12,6500,5,3000,6,1800
