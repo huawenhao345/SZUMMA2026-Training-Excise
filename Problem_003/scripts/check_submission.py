@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Check the review packet, attachment links, PDF text and physical page bounds."""
+"""Check the delivery packet, attachment links, PDF text and physical page bounds."""
 from pathlib import Path
 import json
 import re
@@ -47,8 +47,10 @@ def main():
             raise SystemExit('PDF lost text: ' + phrase)
     if '\ufffd' in content or pages != 3:
         raise SystemExit('PDF encoding or page count mismatch')
-    if content.count('数学建模训练题') != 3 or content.count('审核稿') != 3:
-        raise SystemExit('Review edition headers missing')
+    page_texts = [page.strip() for page in content.split('\f') if page.strip()]
+    if content.count('数学建模训练题') != 3 or len(page_texts) != 3 or not all(
+            '原创模拟题' in page.splitlines()[0] for page in page_texts):
+        raise SystemExit('Submission edition headers missing')
     bbox = subprocess.check_output(['pdftotext', '-bbox-layout', str(ROOT / 'problem.pdf'), '-'], text=True)
     tree = ET.fromstring(bbox)
     words = 0
