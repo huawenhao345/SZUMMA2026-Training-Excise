@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "parameter_status": "题设运行条件和设计限制，非实测数据。",
+  "route": {
+    "length_m": 180,
+    "ids": [
+      "A",
+      "B"
+    ],
+    "slope_interpolation": "按 x_m 对 slope_deg 线性插值；降高为沿线路对 sin(beta) 的积分，不能线性插值高度。"
+  },
+  "design": {
+    "q_values": [
+      1,
+      1.5,
+      2,
+      2.5
+    ],
+    "Re_ohm_range": [
+      0,
+      1.2
+    ],
+    "cooling_ids": [
+      "S",
+      "M",
+      "L"
+    ]
+  },
+  "reference_design": {
+    "q": 1,
+    "Re_ohm": 0,
+    "cooling": "S"
+  },
+  "task_1": {
+    "fixed_winding_temp_c": 20,
+    "include_air_drag": false,
+    "uniform_slope_deg": [
+      4.5,
+      10
+    ],
+    "payload_kg": [
+      40,
+      100
+    ]
+  },
+  "task_2": {
+    "ambient_temp_c": 20,
+    "initial_Tw_c": 20,
+    "initial_Tr_c": 20,
+    "entry_speed_m_s": 0,
+    "theta0_rad": 0,
+    "payload_kg": [
+      40,
+      100
+    ],
+    "run_count_each_case": 1
+  },
+  "normal_operation": {
+    "ambient_temp_c": 35,
+    "initial_Tw_c": 35,
+    "initial_Tr_c": 35,
+    "payload_kg_range": [
+      40,
+      100
+    ],
+    "entry_speed_m_s_range": [
+      0,
+      0.4
+    ],
+    "theta0_rad": 0,
+    "initial_phase_current_a": [
+      0,
+      0,
+      0
+    ],
+    "run_count_each_case": 10,
+    "release_interval_s": 360,
+    "return_and_loading_time_s": 45,
+    "travel_time_limit_s": 300,
+    "payload_and_entry_speed_fixed_within_case": true,
+    "routes_tested_separately": true,
+    "temperature_inherited_between_runs": true,
+    "next_release_phase_current_a": [
+      0,
+      0,
+      0
+    ],
+    "assessment_end_after_last_release_s": 360
+  },
+  "arrival_and_wait": {
+    "stop_position_m": 180,
+    "mechanical_stop": "独立机械装置即时停止车辆并锁住发电机转子；所消耗机械动能不进入 Tw 或 Tr。",
+    "electrical_state": "电路仍连接，停靠后的电流自由衰减；其焦耳热仍进入相应热体。",
+    "return_drive": "外部牵引回程时与发电机制动系统机械脱开，回程及装卸共 45 s。",
+    "waiting_state": "回程和等待时保持相同散热条件，不加外部热；停歇远长于电气时间常数，下一次电流按零初始化。"
+  },
+  "limits": {
+    "speed_m_s": 3,
+    "winding_temp_c": 90,
+    "resistor_temp_c": 100,
+    "absolute_phase_current_a": 50
+  },
+  "fault_operation": {
+    "completed_normal_runs_before_fault": 9,
+    "prehistory_payload_kg": 100,
+    "prehistory_entry_speed_m_s": 0,
+    "failed_phase": "a",
+    "fault_timing": "第十次放行前 a 相与负载的连接已断开，不模拟带电开断瞬态。",
+    "remaining_circuit": "b、c 相连接不变；两个 Y 星点无中线。",
+    "payload_kg_range": [
+      0,
+      100
+    ],
+    "entry_speed_m_s_range": [
+      0,
+      0.4
+    ],
+    "theta0_rad_range": [
+      0,
+      6.283185307179586
+    ],
+    "all_initial_conditions_required": true,
+    "initial_phase_current_a": [
+      0,
+      0,
+      0
+    ],
+    "initial_temperature": "继承同一线路、该设计在九次指定正常运输后第十次放行前的 Tw、Tr。",
+    "travel_time_limit_applies": false,
+    "return_time_applies": false,
+    "assessed_quantities": [
+      "speed_m_s",
+      "winding_temp_c",
+      "resistor_temp_c",
+      "absolute_phase_current_a"
+    ],
+    "assessment_interval": "从第十次放行至到达终点停车；不考核该次后的回程。"
+  }
+}

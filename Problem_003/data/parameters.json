@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "parameter_status": "题设设计参数，非实测数据；用于方案比较，不代表任何实际产品的标定或认证。",
+  "mechanical": {
+    "wheel_radius_m": 0.16,
+    "base_mass_kg": 180,
+    "wheel_axle_inertia_kg_m2": 0.2,
+    "generator_rotor_inertia_kg_m2": 0.012,
+    "gravity_m_s2": 9.81,
+    "rolling_resistance_coefficient": 0.012,
+    "air_drag_coefficient_kg_m": 0.3,
+    "base_mass_scope": "含固定构件及任一备选齿轮箱；不含载荷和散热包增加质量。",
+    "wheel_axle_inertia_scope": "所有车轮与轮轴的总转动惯量，不含发电机转子。",
+    "gear_ratio_definition": "q = 发电机机械角速度 / 轮轴角速度。"
+  },
+  "generator": {
+    "phase_count": 3,
+    "phase_order": [
+      "a",
+      "b",
+      "c"
+    ],
+    "pole_pairs": 4,
+    "phase_flux_peak_wb": 0.24,
+    "inductance_matrix_h": [
+      [
+        0.003,
+        -0.001,
+        -0.001
+      ],
+      [
+        -0.001,
+        0.003,
+        -0.001
+      ],
+      [
+        -0.001,
+        -0.001,
+        0.003
+      ]
+    ],
+    "inductance_matrix_definition": "矩阵每项单位均为 H；行、列按 a、b、c 相排序，包含自感和互感。矩阵在题设工况内不随位置、电流或温度变化。",
+    "phase_copper_resistance_20c_ohm": 0.24,
+    "copper_temp_coefficient_per_k": 0.00393,
+    "copper_reference_temp_c": 20,
+    "phase_flux_definition": "第 j 相永磁磁链为 psi*cos(theta-2*pi*(j-1)/3)，j=1,2,3 对应 a,b,c；theta=p*q*x/r+theta0。",
+    "circuit_connection": "电机绕组 Y 接，三只相同外电阻 Y 接，两个星点互不连接，无中性线；无外部电源及功率电子控制。各相电流正向定义为从该相端口流向发电机星点 Ng。",
+    "external_resistor_scope": "Re 是每相外电阻；Re=0 表示直接短接。三相外电阻均不随温度改变。"
+  },
+  "thermal": {
+    "body_w": "全部绕组和规定的电机内部结构组成一个等温体 Tw。",
+    "body_r": "三只外电阻及电阻箱规定结构共同组成一个等温体 Tr。",
+    "capacity_unit": "J/K",
+    "conductance_unit": "W/K",
+    "capacity_and_conductance_scope": "每个 C、H 为相应整个热体的总量，不是单相值；不随运动或停歇改变。",
+    "heat_input": "三相铜阻的总焦耳热进入 Tw；三相外电阻的总焦耳热进入 Tr；两热体之间不交换热量。",
+    "cooling": "各热体分别向环境散热，散热功率为 H*(T-Ta)；摄氏温度之差与开尔文温差数值相同。"
+  },
+  "pricing": {
+    "currency": "CNY",
+    "external_box_fixed_cost_cny": 500,
+    "external_box_cost_per_ohm_cny": 600,
+    "external_box_cost_definition": "Re=0 时增加费用为 0；Re>0 时整套电阻箱增加费用为 500+600*Re 元。",
+    "cost_scope": "仅比较题设设计增加费用；不是市场报价。总增加费用为齿轮选型、电阻箱与散热包费用之和。",
+    "mass_scope": "基础电阻箱质量已计入基车；它的基础热参数计入 S 包。选型只增加 cooling_options.csv 中的质量。"
+  },
+  "idealizations": [
+    "车轮无滑动，齿轮传动理想。",
+    "滚阻为 mu*m*g*cos(beta)，风阻为 c*v^2；均阻碍下坡运动。",
+    "忽略铁耗、磁饱和、永磁磁链的温度变化和齿轮损耗。",
+    "坡度节点间线性插值角度；题给滚阻是等效近似，不另计坡度曲率力。"
+  ]
+}
