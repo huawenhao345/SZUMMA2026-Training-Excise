@@ -41,13 +41,14 @@ def main():
     pages = int(re.search(r'^Pages:\s+(\d+)', info, re.M).group(1))
     content = subprocess.check_output(['pdftotext', '-layout', str(ROOT / 'problem.pdf'), '-'], text=True)
     for phrase in ['轻型屋盖的积水与排水', '5000', '7500', '1500', '0.18',
-                   '顶撑', '给定水位', '正负弯矩', '参考资料', '不是实测记录']:
+                   '顶撑', '给定水位', '正负弯矩', '参考资料', '不是实测记录',
+                   '截面二次矩', '集中力', '积水分区与排水', '平面布置示意', '纵剖面示意']:
         if phrase not in content:
             raise SystemExit('PDF lost text: ' + phrase)
-    if '\ufffd' in content or pages != 3:
+    if '\ufffd' in content or pages != 4:
         raise SystemExit('PDF encoding or page count mismatch')
     page_texts = [page.strip() for page in content.split('\f') if page.strip()]
-    if content.count('数学建模训练题') != 3 or len(page_texts) != 3 or not all(
+    if content.count('数学建模训练题') != 4 or len(page_texts) != 4 or not all(
             '审核稿' in page.splitlines()[0] for page in page_texts):
         raise SystemExit('Review edition headers missing')
     bbox = subprocess.check_output(['pdftotext', '-bbox-layout', str(ROOT / 'problem.pdf'), '-'], text=True)
