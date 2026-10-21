@@ -1,0 +1,121 @@
+% Original mechanism-based training problem, review edition.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=23mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{Noto Serif CJK SC}[ItalicFont={Noto Serif CJK SC},ItalicFeatures={FakeSlant=0.15}]
+\setsansfont{Noto Sans CJK SC}\setmonofont{DejaVu Sans Mono}[Scale=0.81]
+\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip=0pt plus 1pt
+\usepackage{amsmath,amssymb,booktabs,array,enumitem,tikz,fancyhdr,hyperref,xurl}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=black,urlcolor=blue!50!black,pdftitle={轻型屋盖的积水与排水},pdfauthor={SZUMMA2026 Training}}
+\setlength{\parindent}{2em}\setlength{\parskip}{5pt}
+\setlist[enumerate]{leftmargin=2em,itemsep=11pt,topsep=7pt}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small 数学建模训练题\quad Problem\_004}\fancyhead[R]{\small 审核稿}\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}\newcommand{\file}[1]{\texttt{\detokenize{#1}}}
+\begin{document}
+\begin{center}{\LARGE\bfseries 轻型屋盖的积水与排水}\end{center}
+
+平屋盖排水不畅时，积水会使屋面下挠，原来的低洼处可能进一步加深，排水口与屋面高点的位置也随之改变。只按未变形的屋面计算雨水荷载，未必能反映实际情况。某场馆准备改造一段轻型屋盖，需比较排水改造、梁加固和临时顶撑的作用。
+
+将研究范围取为长 6 米、宽 4 米的条带，横向视为刚性，沿长度方向按小挠度线弹性梁处理。两端竖向位移为零、转动自由，锚固可承担上拔反力；不计轴向伸长。梁的抗弯刚度为 $EI$，永久荷载已折为整条带的均布线荷载 $q_0$。以未加载梁的水平位置为高程零线，沿梁为 $x$，向下挠度 $w(x)$ 取正，屋面高程为 $-w(x)$。初始无水，但应计入永久荷载造成的变形。
+
+中点有一道随屋面运动的隔坎，将屋面分成左右两区。每区内水面水平，水位分别为 $H_1$、$H_2$；水深由水面与变形后屋面的高差确定，干处水深为零。两区仅通过隔坎上的一个槽口交换水。设坎高为 $d$、槽宽为 $b_c$，坎顶高程为 $z_c=d-w(3)$。本题按下式计算过坎流量：
+\[
+Q_{12}=C_w b_c\left([H_1-z_c]_+^{3/2}-[H_2-z_c]_+^{3/2}\right),
+\qquad [a]_+=\max(a,0).
+\]
+$Q_{12}>0$ 表示从左区流向右区。该式是题设采用的分区交换关系，不要求另建淹没出流修正。
+
+两区各有一个排水口，随当地屋面运动。唇口高出当地屋面 $e$，位置、有效面积分别为 $x_j,A_j$。下游通大气，无回流，排水量按
+\[
+Q_j=C_d A_j\sqrt{2g[H_j+w(x_j)-e]_+},\qquad j=1,2
+\]
+计算。流量公式均用国际单位制。题给进水量已包含本条带降雨及邻接屋面的汇水，不再另加降雨。忽略蒸发、渗漏及外缘溢流，停雨后排水仍继续。
+
+\begin{center}
+\begin{tikzpicture}[x=1.05cm,y=1cm,font=\small]
+\draw[thick] (0,0) .. controls (1,-.6) and (2,-.85) .. (3,-.85) .. controls (4,-.85) and (5,-.6) .. (6,0);
+\draw (0,0)--(-.12,-.23)--(.12,-.23)--cycle;\draw (6,0)--(5.88,-.23)--(6.12,-.23)--cycle;
+\draw[thick] (3,-.85)--(3,-.28);\draw[dashed] (0,.22)--(6,.22);
+\draw[blue] (.50,-.26)--(2.97,-.26);\draw[blue] (3.03,-.48)--(5.0,-.48);
+\node at (1.5,.5) {左区，$H_1$};\node at (4.6,.5) {右区，$H_2$};
+\node[below] at (3,-.9) {中点隔坎及槽口};\node[left] at (0,.22) {零线};
+\draw[fill=white] (1.2,-.5584) circle (.045);\draw[fill=white] (4.8,-.5584) circle (.045);
+\node at (1.0,-.8) {排水口1};\node at (5.1,-.8) {排水口2};
+\end{tikzpicture}
+\end{center}
+
+结构变形与区内水面调整远快于进排水过程，各时刻按当前两区水量求准静态平衡。忽略结构振动、水的附加惯性及水平水压对等效梁的影响。示意图不代表给定时刻的计算结果，具体参数见附件。
+
+\newpage
+\begin{center}{\large\bfseries 研究任务}\end{center}
+
+请建立数学模型，研究以下问题。
+\begin{enumerate}
+\item 暂时拆除隔坎、封住排水口，比较两种静水试验：一种加入有限水量后封闭，另一种与大水箱双向连通以维持给定水位。先对总水量为 $0.1、0.5、1.0\,\mathrm{m^3}$ 的封闭试验，计算原梁的变形、水面及弯矩。再以维持水位 $H=0.01\,\mathrm m$ 为例，分析改变 $EI$ 时的平衡与稳定性。两种试验的稳定性判断有什么不同？说明所用判据，并区分稳定平衡与满足使用限值。
+\item 恢复隔坎和原排水口。附件给出 U、L、R 三种进水工况，总进水流量随时间完全相同，左右分配不同。分别研究从干屋面开始的90分钟过程，分析变形、积水、分区交换及排水。总蓄水量是否足以评价屋盖状态？将屋面固定在永久荷载下的初始形状，重新计算进排水，比较忽略水荷载变形对判断的影响。给出检验模型和数值结果的依据。
+\item 在1500元、7500元两种预算下，分别提出永久改造方案。可选加固档位、排水口位置与有效面积见附件，同一方案须用于三种工况。整个过程向下挠度不超过 $0.12\,\mathrm m$，正负弯矩的绝对值不超过所选档位的限值，90分钟末两区总残余水量不超过 $0.18\,\mathrm{m^3}$。比较费用、使用余量与排水结果，说明选择依据。
+\item 采用第三问7500元预算推荐方案，若左排水口在第25分钟完全堵塞，此后不再排水，而右口保持正常，拟在中点设置临时顶撑。顶撑只向上承压、不向下拉，运动规则如下。比较不顶撑和不同启动时刻的过程，给出一个同时适用于三种进水工况的启动安排，或说明不能满足要求的原因。须保留第三问的挠度、正负弯矩限值，顶撑反力不超过5000牛；启动前已出现的越限不能由后来恢复抵消。考察至90分钟，报告残余水量，但不以第三问残余水量限值作为应急通过条件。评价减小挠度是否足以说明恢复了排水，顶撑能否代替疏通排水口。
+\end{enumerate}
+
+顶撑启动时刻 $t_J$ 可在第30至60分钟内选择。启动前支柱不接触屋盖。令
+\[
+s_0=\max\{w(3,t_J^-),0.012\},\qquad
+s(t)=\max\{0.012,s_0-0.002(t-t_J)\},\quad t\ge t_J,
+\]
+其中时间以分钟计，长度以米计。支柱顶高程为 $-s(t)$，即以每分钟2毫米向上移动，达到距零线向下12毫米处后停止。中点屋面不能向下穿过支柱；若屋面与支柱分离，则顶撑反力为零。临时顶撑不改变梁刚度、隔坎或排水口参数，考核其反力，不计其增设费用。
+
+论文应说明模型假设、稳定性与使用限值的关系，附可复现的程序。题目参数与限值用于方案比较，不视为现行建筑规范条款。
+
+\newpage
+\begin{center}{\large\bfseries 参数与附件}\end{center}
+
+本题附件全部为设计参数与规定工况，不是实测记录。研究按上述梁模型开展，无须另行收集监测数据。水面高程、局部水深和平均水深应加以区分。
+
+\begin{center}
+\begin{tabular}{lrl}
+\toprule
+项目 & 数值 & 说明及单位\\\midrule
+长度、宽度 & 6、4 & m\\
+原梁 $EI_0$ & $4\times10^5$ & 整条带等效抗弯刚度，$\mathrm{N\,m^2}$\\
+$q_0$ & 600 & 整条带永久线荷载，N/m\\
+$\rho$、$g$ & 1000、9.81 & $\mathrm{kg/m^3}$、$\mathrm{m/s^2}$\\
+$d$、$b_c$ & 0.04、0.10 & 坎高、槽宽，m\\
+$C_w$ & 1.6 & 交换关系系数，$\mathrm{m^{1/2}/s}$\\
+$C_d$、$e$ & 0.62、0.005 & 出流系数、唇口高差（m）\\
+原排水口位置 & 1.2、4.8 & m\\
+原口有效面积 & $6\times10^{-4}$ & 每口，$\mathrm{m^2}$\\\bottomrule
+\end{tabular}
+\end{center}
+
+左口位置可取 $0.6、1.2、1.8、2.4\,\mathrm m$，右口可取 $3.6、4.2、4.8、5.4\,\mathrm m$，均自左端量起；各口有效面积可在 $[6,12]\times10^{-4}\,\mathrm{m^2}$ 内连续选取。每改变一个排水口位置增加费用450元，位置不变不收费。扩口费用为
+\[
+3\times10^6\left[(A_1-6\times10^{-4})+(A_2-6\times10^{-4})\right]\ \text{元},
+\]
+其中面积代入以 $\mathrm{m^2}$ 表示的数值。可保留原梁，或在全长均匀加固；加固增加自重在本题中忽略。总费用为加固、移口与扩口费用之和。
+
+\begin{center}
+\begin{tabular}{crrr}
+\toprule
+档位 & $EI/EI_0$ & 正负弯矩绝对值限值（N\,m） & 增费（元）\\\midrule
+B & 1.00 & 12000 & 0\\
+S & 1.25 & 14000 & 3000\\
+T & 1.50 & 16000 & 6000\\\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{p{.42\linewidth}p{.52\linewidth}}
+\toprule
+文件 & 内容\\\midrule
+\file{parameters.json}\newline\file{rules.json} & 物理参数、费用及运行评价规则\\
+\file{inflows.csv} & 各工况分段恒定的左右进水量，单位升/分钟；起止时间为分钟\\
+\file{stiffening_options.csv} & 加固刚度、弯矩限值与费用\\
+\file{data/README.md} & 字段、单位、初始条件与顶撑说明\\\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{参考资料}
+
+\small
+积水荷载与结构变形的基础研究可参见 Marino，\href{https://ej.aisc.org/index.php/engj/article/view/1258}{Ponding of Two-Way Roof Systems}，AISC Engineering Journal，1966；Colombi，\textit{The ponding problem on flat steel roof grids}，2006，\href{https://doi.org/10.1016/j.jcsr.2005.11.010}{DOI: 10.1016/j.jcsr.2005.11.010}。实际工程案例可查 \href{https://www.cross-safety.org/uk/safety-information/cross-safety-report/roof-collapse-warehouse-structure-under-rainwater-969}{CROSS：Roof collapse of warehouse structure under rainwater ponding}。本题为原创模拟题，未引用这些资料的试验参数、图表或规范条款。
+\end{document}

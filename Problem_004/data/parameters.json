@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "status": "原创题设设计参数与工况，非实测数据；费用不是市场报价。",
+  "roof": {
+    "length_m": 6.0,
+    "width_m": 4.0,
+    "base_EI_N_m2": 400000.0,
+    "dead_load_N_m": 600.0,
+    "rho_kg_m3": 1000.0,
+    "gravity_m_s2": 9.81,
+    "reference": "梁未加载、两端支承同高的水平线为高程零；向下挠度w为正，屋面高程为-w。",
+    "beam": "Euler–Bernoulli小挠度线弹性等效梁；横向刚性；两端竖向位移零且转动自由，锚固可承受上拔。忽略轴向伸长、结构振动与水的附加惯性。",
+    "loads": "dead_load已为整个4m宽条带的均布线荷载；水荷载另按真实水深计算。围护承担水平水压。加固增加自重忽略。"
+  },
+  "divider": {
+    "x_m": 3.0,
+    "height_above_roof_m": 0.04,
+    "notch_width_m": 0.1,
+    "coefficient_m05_s": 1.6,
+    "flow": "Q12=Cw*notch_width*([H1-zc]_+^1.5-[H2-zc]_+^1.5)，zc=-w(3)+height；Q12正值从区1流向区2。",
+    "motion": "隔坎随屋面移动；除所给过水槽外不跨区漏水。"
+  },
+  "drain": {
+    "Cd": 0.62,
+    "lip_above_roof_m": 0.005,
+    "area_range_m2": [
+      0.0006,
+      0.0012
+    ],
+    "left_positions_m": [
+      0.6,
+      1.2,
+      1.8,
+      2.4
+    ],
+    "right_positions_m": [
+      3.6,
+      4.2,
+      4.8,
+      5.4
+    ],
+    "original_positions_m": [
+      1.2,
+      4.8
+    ],
+    "original_area_m2": 0.0006,
+    "flow": "Qj=Cd*Aj*sqrt(2*g*[Hj+w(xj)-lip]_+)；下游自由出流、无回流，停雨后仍适用。",
+    "motion": "排水口随当地屋面移动，唇口与屋面保持给定高差；排水管出口通大气。"
+  },
+  "hydraulics": {
+    "units": "水位H为相对零线的绝对高程，不是平均水深；体积为m3；流量公式用m3/s。",
+    "model": "两区各自水面水平；忽略区内水平流动水头损失，水深由水面与变形屋面高差决定，干处为零；无蒸发渗漏和外缘溢流。分区仅通过所给槽交换。",
+    "time_scales": "结构与区内水面平衡比进排水快；各时刻按当前各区水量求准静态弹性平衡。"
+  },
+  "pricing": {
+    "currency": "CNY",
+    "relocate_each_cny": 450.0,
+    "area_added_cost_cny_per_m2": 3000000.0,
+    "formula": "总增加费=加固费+450*(改变位置的排水口个数)+3000000*((A1-.0006)+(A2-.0006))。保留原位置不收费。"
+  },
+  "provenance": "全部数值为可复现的设计设定。文献只支持基本机制，不是数值来源。"
+}
