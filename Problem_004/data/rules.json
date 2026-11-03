@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "题设运行与评价规则，非实测数据。",
+  "reference_design": {
+    "stiffening": "B",
+    "left_x_m": 1.2,
+    "right_x_m": 4.8,
+    "left_area_m2": 0.0006,
+    "right_area_m2": 0.0006
+  },
+  "duration_min": 90.0,
+  "initial_water_m3": [
+    0.0,
+    0.0
+  ],
+  "initial_structure": "在恒载下的干屋面平衡；不将初始屋面当作无挠度水平面。",
+  "task_1": {
+    "divider_removed": true,
+    "drains_closed": true,
+    "water_volumes_m3": [
+      0.1,
+      0.5,
+      1.0
+    ],
+    "maintained_level_m": 0.01,
+    "comparison": "给定有限总水量的封闭试验，对比外接水箱维持给定水位的辅助试验。静力稳定与位移/弯矩限值分别检查。"
+  },
+  "task_2": {
+    "cases": [
+      "U",
+      "L",
+      "R"
+    ],
+    "reference_design": true,
+    "include_rigid_comparison": true
+  },
+  "design": {
+    "budgets_cny": [
+      1500.0,
+      7500.0
+    ],
+    "case_ids": [
+      "U",
+      "L",
+      "R"
+    ],
+    "fixed_across_cases": true,
+    "limits": {
+      "downward_deflection_m": 0.12,
+      "remaining_water_m3_at_90min": 0.18
+    },
+    "moment_limit": "使用stiffening_options.csv所选行的M_limit_N_m，正负弯矩均取绝对值。"
+  },
+  "task_4": {
+    "base_design": "第三问7500元预算推荐方案，不重新改选组件；考察U/L/R三种进水。",
+    "left_drain_block_min": 25.0,
+    "blockage_after": "左排水口此后完全堵塞，右口不变；无顶撑作为对照。",
+    "jack_x_m": 3.0,
+    "start_min_range": [
+      30.0,
+      60.0
+    ],
+    "target_downward_m": 0.012,
+    "upward_rate_mm_min": 2.0,
+    "reaction_limit_N": 5000.0,
+    "jack_rule": "启动前支柱不接触。s0=max(启动前瞬时中点挠度,0.012)，支柱顶高程为-s；启动后s=max(0.012,s0-0.002*(t-tJ))，t以分钟计。",
+    "contact": "仅向上承压、不向下拉；梁中点向下挠度不能超过s。若未接触，支柱反力为零。",
+    "observation_end_min": 90.0,
+    "remaining_water_requirement_applies": false,
+    "retained_limits": [
+      "所选正负弯矩限值",
+      "向下挠度0.12m",
+      "顶撑反力5000N"
+    ],
+    "start_fixed_across_cases": true,
+    "restriction": "启动前已经越限的过程不能因后来恢复而判为满足要求。"
+  }
+}
