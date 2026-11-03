@@ -1,0 +1,13 @@
+case_id,campus_id,role,scenario,paired_normal_case_id,event_start_s,event_extra_passengers,event_origin_stop
+Y_P1,Y,planning,normal,,,0,
+Y_P2,Y,planning,normal,,,0,
+Y_P3,Y,planning,normal,,,0,
+Y_N,Y,validation,normal,Y_N,,0,
+Y_R,Y,validation,rain,Y_N,1800,0,
+Y_E,Y,validation,event,Y_N,2100,90,6
+L_P1,L,planning,normal,,,0,
+L_P2,L,planning,normal,,,0,
+L_P3,L,planning,normal,,,0,
+L_N,L,validation,normal,L_N,,0,
+L_R,L,validation,rain,L_N,1800,0,
+L_E,L,validation,event,L_N,2100,70,7

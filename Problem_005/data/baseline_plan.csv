@@ -1,0 +1,10 @@
+campus_id,bus_id,first_service_s,base_hold_s
+Y,Y1,0,0
+Y,Y2,120,0
+Y,Y3,240,0
+Y,Y4,360,0
+Y,Y5,480,0
+L,L1,0,0
+L,L2,120,0
+L,L3,240,0
+L,L4,360,0
