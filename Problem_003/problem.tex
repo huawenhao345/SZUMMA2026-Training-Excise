@@ -1,0 +1,128 @@
+% Original mechanism-based training problem; approved submission edition.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=23mm,headheight=14pt]{geometry}
+\usepackage{fontspec}
+\setmainfont{Noto Serif CJK SC}[ItalicFont={Noto Serif CJK SC},ItalicFeatures={FakeSlant=0.15}]
+\setsansfont{Noto Sans CJK SC}
+\setmonofont{DejaVu Sans Mono}[Scale=0.82]
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip=0pt plus 1pt
+\usepackage{amsmath,amssymb,booktabs,array,enumitem,tikz,fancyhdr,hyperref,xurl}
+\hypersetup{unicode=true,colorlinks=true,linkcolor=black,urlcolor=blue!50!black,
+pdftitle={山地货运轨道车的无源限速},pdfauthor={SZUMMA2026 Training}}
+\setlength{\parindent}{2em}\setlength{\parskip}{5pt}
+\setlist[enumerate]{leftmargin=2em,itemsep=12pt,topsep=8pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 数学建模训练题\quad Problem\_003}
+\fancyhead[R]{\small 原创模拟题}\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\newcommand{\file}[1]{\texttt{\detokenize{#1}}}
+\begin{document}
+\begin{center}{\LARGE\bfseries 山地货运轨道车的无源限速}\end{center}
+
+山地运输中，小型轨道车可借助重力将货物送往低处。下坡时需要控制车速，连续使用摩擦制动又会带来磨损和发热。某运输队拟试制一套不接外部电源的限速装置：用车轮带动永磁发电机，将产生的电能消耗在绕组和电阻箱中。该装置只负责下坡限速，终点停车和驻车由另一套机械装置完成。
+
+轨道车沿两条备选坡道 A、B 运行，线路长度均为 180 米。两条线路的总降高相同，较陡坡段的位置不同，坡度见附件。以沿轨道向下的距离 $x$ 为位置，车速记为 $v$，当地坡度记为 $\beta(x)$。车轮纯滚动，滚动阻力按 $\mu m g\cos\beta$ 计算，风阻按 $c v^2$ 计算，方向均与下行相反。$m$ 为含货物和装置的总质量，$g$ 为重力加速度。车轮、发电机转子均有转动惯量；齿轮传动按无损处理。
+
+发电机采用对称三相绕组。发电机绕组和电阻箱分别接成星形，两个星点不相连，如图所示。各相串接相同的固定外电阻 $R_e$；$R_e=0$ 时直接用导线连接，不接电阻箱负载。下行途中不切换电路，也不改变齿轮比。
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small]
+\draw (0,-1.05)--(0,1.05);\draw (8,-1.05)--(8,1.05);
+\foreach \y/\lab in {1/a,0/b,-1/c}{
+\draw (0,\y)--(1.0,\y);\draw (3.6,\y)--(4.6,\y);\draw (6.4,\y)--(8,\y);
+\draw (1.0,\y-.24) rectangle (3.6,\y+.24);
+\node at (2.3,\y) {\lab 相绕组};
+\draw (4.6,\y-.24) rectangle (6.4,\y+.24);\node at (5.5,\y) {$R_e$};
+\node[above] at (4.1,\y) {\lab};}
+\fill (0,0) circle (1.5pt);\fill (8,0) circle (1.5pt);
+\node[left] at (0,0) {$N_g$};\node[right] at (8,0) {$N_r$};
+\node at (4,-1.65) {两星点 $N_g$、$N_r$ 之间没有额外连线};
+\end{tikzpicture}
+\end{center}
+
+设齿轮比 $q$ 为发电机机械角速度与轮轴角速度之比，车轮半径为 $r$，发电机极对数为 $p$。电角度为 $\theta=pqx/r+\theta_0$。永磁体在三相绕组中产生的磁链分别为
+\[
+\psi_a=\Psi\cos\theta,\qquad
+\psi_b=\Psi\cos(\theta-2\pi/3),\qquad
+\psi_c=\Psi\cos(\theta+2\pi/3).
+\]
+磁链指磁通与绕组匝数的乘积，$\Psi$ 为其峰值。各相电流以相端口流向发电机星点 $N_g$ 为正，$\boldsymbol i=(i_a,i_b,i_c)^{\mathsf T}$。电流还会产生磁链，三相电感矩阵 $\boldsymbol L$ 见附件，因而总磁链为 $\boldsymbol L\boldsymbol i+(\psi_a,\psi_b,\psi_c)^{\mathsf T}$。电感按常数处理，不考虑铁耗、磁饱和及磁链随温度的变化。
+
+每相铜阻随绕组温度 $T_w$ 变化，外电阻按常数处理。绕组及内部结构视为一个等温热体，三相外电阻共用的箱体视为另一个等温热体，温度记为 $T_r$。两处焦耳热分别进入所在热体，不相互传热；各自向环境散热的功率为 $H(T-T_a)$，其中 $T_a$ 为环境温度。热容与散热系数均为整套装置的值。
+
+\newpage
+\begin{center}{\large\bfseries 研究任务}\end{center}
+
+运输队可以选择齿轮比、外电阻和散热组件，取值与费用见附件。基本车体质量为 180 千克，已含发电机、齿轮箱和基础电阻箱；升级散热组件的质量另计。正常运输载荷为 40 至 100 千克，入口速度为 0 至 $0.4\,\mathrm{m/s}$。参考装置采用 $q=1$、$R_e=0$ 和 S 型散热组件。
+
+正常放行时三相电流均为零，$\theta_0=0$。到达终点后，机械装置立即将车停下并锁住发电机转子，机械动能由该装置消耗；电路保持连接，剩余电流自行衰减，其发热仍需计入。回程牵引时，发电机与轮轴脱开。回程及装卸共需 45 秒，其余停歇时间用于等待；两热体始终按题给条件散热。
+
+请建立数学模型，研究以下问题。
+\begin{enumerate}
+\item 先将绕组温度保持在 $20\,{}^\circ\mathrm C$，不计风阻。建立装置的机电运动模型，说明能量的去向。采用参考装置，分别考察载荷为 40、100 千克、坡度为 $4.5^\circ$、$10^\circ$ 的足够长均匀坡道：能否形成稳定限速？初始车速改变时，结论是否仍成立？分析改变外电阻对限速能力的影响。
+\item 考虑两处温升与风阻，分析参考装置在 A、B 两条线路上的首趟运行。环境及初始温度均为 $20\,{}^\circ\mathrm C$，入口速度为零，载荷分别取 40、100 千克。比较车速、电流和温度的变化，说明仅按长均匀坡道上的稳定车速判断装置是否合适，有无遗漏。给出检验模型和计算结果的依据。
+\item 选定一套固定装置，用于两条线路及上述正常载荷、入口速度范围。环境温度为 $35\,{}^\circ\mathrm C$，初始两热体均为环境温度；同一辆车每隔 360 秒放行一次，共运行十次。每组检验中的线路、载荷和入口速度保持不变，两条线路分别检验；后续放行的电流取零，温度须继承前次状态。\par
+每趟下行不超过 300 秒，车速不超过 $3\,\mathrm{m/s}$，绕组温度不超过 $90\,{}^\circ\mathrm C$，电阻箱温度不超过 $100\,{}^\circ\mathrm C$，任一相电流的瞬时绝对值不超过 50 安培。温度考察至第十次放行后 360 秒。比较装置费用与性能余量，给出推荐方案，列明选型和检验范围。
+\item 采用第三问推荐的装置，仍按第三问的环境和发车安排，在同一线路以 100 千克载荷、零入口速度完成九次正常运输。第十次放行前，发现 a 相绕组与负载之间的连接已经断开，b、c 相仍按原接线连接，两个星点仍不相连。本问不模拟带电开断过程。放行前两热体继承正常运行的温度，电流为零，但初始电角度 $\theta_0$ 未知，可取 $[0,2\pi)$ 内任意值。若将载荷降至 0 至 100 千克，能否完成安全下行？允许下行的载荷须在所有可能的初始电角度和题给入口速度下满足限制。本问只考察第三问的车速、温度和电流限制，考察至该次到达终点停车，不考核运输时间及后续回程。分别为两条线路给出允许下行或应停运的范围，并说明边界的确定依据。
+\end{enumerate}
+
+论文应说明所用近似及其适用条件，并附可复现的计算程序。方案中的三个选型在各趟和各检验工况间保持一致。
+
+\newpage
+\begin{center}{\large\bfseries 附件与说明}\end{center}
+
+附件数值是为本题设定的设计参数与工况，不是某产品的试验记录。比赛不要求收集运行数据或拟合经验关系。参数整理程序仅用于复现附件；结构原理的参考资料不作为这些数值的来源。
+
+\begin{center}
+\begin{tabular}{lrl}
+\toprule
+参数 & 数值 & 说明及单位\\\midrule
+$r$ & 0.16 & 车轮半径，m\\
+$p$ & 4 & 发电机极对数\\
+$\Psi$ & 0.24 & 永磁相磁链峰值，Wb\\
+$R_{w,20}$ & 0.24 & 每相 $20\,{}^\circ\mathrm C$ 铜阻，$\Omega$\\
+$\alpha$ & 0.00393 & 铜阻温度系数，$\mathrm K^{-1}$\\
+$J_w$ & 0.20 & 总轮轴转动惯量，不含转子，$\mathrm{kg\,m^2}$\\
+$J_g$ & 0.012 & 发电机转子转动惯量，$\mathrm{kg\,m^2}$\\
+$\mu$ & 0.012 & 滚动阻力系数\\
+$c$ & 0.30 & 风阻系数，$\mathrm{kg/m}$\\
+$g$ & 9.81 & 重力加速度，$\mathrm{m/s^2}$\\\bottomrule
+\end{tabular}
+\end{center}
+\[
+R_w(T_w)=R_{w,20}\,[1+\alpha(T_w-20)],\qquad
+\boldsymbol L=10^{-3}
+\begin{pmatrix}3&-1&-1\\-1&3&-1\\-1&-1&3\end{pmatrix}\mathrm H.
+\]
+温度以摄氏度计，温差以 K 计；坡度按附件节点间线性插值，再换为弧度参加计算。题给滚阻作为线路等效关系，不再另计坡度曲率的影响。
+
+$q$ 可取 1、1.5、2、2.5，相应齿轮箱增费分别为 0、700、2000、2800 元，质量均已含在基本车体中。每相 $R_e$ 可在 $[0,1.2]\,\Omega$ 内选取；$R_e=0$ 时负载增费为零，$R_e>0$ 时整套电阻箱负载增费为 $500+600R_e$ 元，此处 $R_e$ 代入以 $\Omega$ 表示的数值。费用仅用于本题设计比较。
+
+\begin{center}
+\begin{tabular}{crrrrrr}
+\toprule
+组件 & 增加质量 & $C_w$ & $H_w$ & $C_r$ & $H_r$ & 增费\\
+ & kg & J/K & W/K & J/K & W/K & 元\\\midrule
+S & 0 & 5000 & 1.5 & 900 & 1.2 & 0\\
+M & 5 & 5000 & 3 & 1800 & 3 & 900\\
+L & 12 & 6500 & 5 & 3000 & 6 & 1800\\\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{p{.45\linewidth}p{.49\linewidth}}
+\toprule
+文件 & 内容\\\midrule
+\file{parameters.json}\newline\file{rules.json} & 物理参数、价格与运行条件\\
+\file{routes.csv} & 两条线路的坡度节点\\
+\file{gear_options.csv}\newline\file{cooling_options.csv} & 齿轮和散热组件选型\\
+\file{data/README.md} & 字段、单位、启停与故障口径\\\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{8pt}\noindent\textbf{参考资料}
+
+\small
+本题为原创模拟题。有关永磁电机磁链与接线，可查 MathWorks \href{https://www.mathworks.com/help/simscape-electrical/ref/pmsm.html}{PMSM 官方模型说明}。短路制动的实验研究可参见 Groß 等，\textit{Experimental comparison of a three- and a five-phase permanent magnet synchronous machine}，2026，\href{https://doi.org/10.1007/s00502-025-01393-3}{DOI: 10.1007/s00502-025-01393-3}。文献中的电机结构与本题不同，未引用其试验参数或性能数值。
+\end{document}
