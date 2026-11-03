@@ -36,7 +36,7 @@ def main():
     content=subprocess.check_output(['pdftotext','-layout',str(ROOT/'problem.pdf'),'-'],text=True)
     compact=re.sub(r'\s+','',content)
     for phrase in ['校园小巴的高峰运行与调度','7350','2448','7200','5400','1800','95',
-                   '信息延迟','未完成','交班','不是学校现行运营记录或制度','参考资料']:
+                   '信息延迟','未完成','交班','模拟设定','参考资料']:
         if re.sub(r'\s+','',phrase) not in compact:raise SystemExit('PDF lost text: '+phrase)
     ptexts=[p.strip() for p in content.split('\f') if p.strip()]
     if pages!=4 or '\ufffd' in content or len(ptexts)!=4:raise SystemExit('PDF page count or text encoding mismatch')
